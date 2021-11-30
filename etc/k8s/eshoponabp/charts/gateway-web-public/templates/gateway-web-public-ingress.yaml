@@ -35,3 +35,17 @@ spec:
             name: {{ .Release.Name }}-{{ .Chart.Name }}
             port:
               number: 80
+      - path: /api/account
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.reRoutes.identityService.host }}
+            port:
+              number: {{ .Values.reRoutes.identityService.port }}
+      - path: /api/abp
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.reRoutes.administrationService.host }}
+            port:
+              number: {{ .Values.reRoutes.administrationService.port }} 
