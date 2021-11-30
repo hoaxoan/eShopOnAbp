@@ -1,6 +1,6 @@
 config:
   selfUrl: https://eshop-st-public-web
-  gatewayUrl: "http://eshop-st-gateway-web-public/"
+  gatewayUrl: http://eshop-st-gateway-web-public/
   authServer:
     authority: http://eshop-st-authserver
     requireHttpsMetadata: "false"

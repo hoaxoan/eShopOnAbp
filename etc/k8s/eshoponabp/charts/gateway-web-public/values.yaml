@@ -1,6 +1,6 @@
 config:
   selfUrl: https://eshop-st-gateway-public-web
-  corsOrigins: https://eshop-st-gateway-public-web
+  corsOrigins: https://eshop-st-public-web
   globalConfigurationBaseUrl: http://eshop-st-gateway-public-web  
   dotnetEnv: Staging 
   redisHost: es-st-redis

@@ -31,10 +31,10 @@ web:
 # public-web sub-chart override
 public-web:
   config:
-    selfUrl: https://eshop-st-public-web
+    selfUrl: "https://eshop-st-public-web"
     gatewayUrl: "http://eshop-st-gateway-web-public/"
     authServer:
-      authority: http://eshop-st-authserver
+      authority: "http://eshop-st-authserver"
       requireHttpsMetadata: "false"
     dotnetEnv: Staging
     redisHost: es-st-redis
@@ -103,9 +103,6 @@ gateway-web:
     selfUrl: https://eshop-st-gateway-web
     corsOrigins: https://eshop-st-web
     globalConfigurationBaseUrl: http://eshop-st-gateway-public
-    authServer:
-      authority: http://eshop-st-authserver
-      requireHttpsMetadata: "false"
     dotnetEnv: Staging
     redisHost: es-st-redis
     rabbitmqHost: es-st-rabbitmq
@@ -130,6 +127,7 @@ gateway-web:
 gateway-web-public:
   config:
     selfUrl: https://eshop-st-gateway-web-public
+    corsOrigins: https://eshop-st-public-web
     globalConfigurationBaseUrl: http://eshop-st-gateway-public-web
     dotnetEnv: Staging
     redisHost: es-st-redis
