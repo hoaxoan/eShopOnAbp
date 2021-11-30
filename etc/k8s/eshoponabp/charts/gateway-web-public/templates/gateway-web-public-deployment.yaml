@@ -27,22 +27,18 @@ spec:
         env:
         - name: App__SelfUrl
           value: "{{ .Values.config.selfUrl }}"
-        - name: GlobalConfiguration__BaseUrl
+        - name: App__CorsOrigins
+          value: "{{ .Values.config.corsOrigins }}"        
+        - name: App__GlobalConfiguration__BaseUrl
           value: "{{ .Values.config.globalConfigurationBaseUrl }}"
         - name: "DOTNET_ENVIRONMENT"
           value: "{{ .Values.config.dotnetEnv }}"
         - name: "Redis__Configuration"
           value: "{{ .Values.config.redisHost }}"
-        - name: "RabbitMQ__Connections__Default__HostName"
-          value: "{{ .Values.config.rabbitmqHost }}"  
-        - name: "AuthServer__Authority"
-          value: "{{ .Values.config.authServer.authority }}"
-        - name: "AuthServer__RequireHttpsMetadata"
-          value: "{{ .Values.config.authServer.requireHttpsMetadata }}"        
         - name: "ElasticSearch__Url"
-          value: "{{ .Values.config.elasticsearchHost }}"          
-        - name: "StringEncryption__DefaultPassPhrase"
-          value: "{{ .Values.config.stringEncryptionDefaultPassPhrase }}"
+          value: "{{ .Values.config.elasticsearchHost }}"  
+        - name: "RabbitMQ__Connections__Default__HostName"
+          value: "{{ .Values.config.rabbitmqHost }}"        
           {{- if .Values.env }}
 {{ toYaml .Values.env | indent 8 }}
           {{- end }}

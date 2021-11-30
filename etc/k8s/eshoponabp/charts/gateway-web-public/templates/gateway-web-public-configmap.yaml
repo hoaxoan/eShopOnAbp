@@ -5,6 +5,14 @@ metadata:
 data:
   appsettings.json: |-
     {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "AllowedHosts": "*",
       "Routes": [   
     {
       "ServiceKey": "Identity Service",

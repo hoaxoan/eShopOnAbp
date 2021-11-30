@@ -132,14 +132,10 @@ gateway-web-public:
   config:
     selfUrl: https://eshop-st-gateway-web-public
     globalConfigurationBaseUrl: http://eshop-st-gateway-public-web
-    authServer:
-      authority: http://eshop-st-AUTHSERVER
-      requireHttpsMetadata: "false"
     dotnetEnv: Staging
     redisHost: es-st-redis
     rabbitmqHost: es-st-rabbitmq
     elasticsearchHost: es-st-elasticsearch
-    stringEncryptionDefaultPassPhrase: gsKnGZ041HLL4IM8
   ingress:
     host: eshop-st-gateway-web-public
   image:
