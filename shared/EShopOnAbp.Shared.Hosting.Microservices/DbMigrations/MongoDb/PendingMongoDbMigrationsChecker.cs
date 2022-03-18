@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using Serilog;
-using System;
-using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.MongoDB;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Uow;
 
-namespace EShopOnAbp.Shared.Hosting.Microservices.DbMigrations;
+namespace EShopOnAbp.Shared.Hosting.Microservices.DbMigrations.MongoDb;
 
 public class PendingMongoDbMigrationsChecker<TDbContext> : PendingMigrationsCheckerBase
     where TDbContext : AbpMongoDbContext
@@ -61,7 +61,7 @@ public class PendingMongoDbMigrationsChecker<TDbContext> : PendingMigrationsChec
     /// </summary>
     protected virtual async Task MigrateDatabaseSchemaAsync()
     {
-        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_Mongo"))
+        await using (var handle = await DistributedLockProvider.TryAcquireAsync($"Migration_Mongo_{DatabaseName}"))
         {
             if (handle == null)
             {
@@ -99,6 +99,7 @@ public class PendingMongoDbMigrationsChecker<TDbContext> : PendingMigrationsChec
 
                 await uow.CompleteAsync();
             }
+            Log.Information($"Lock is released for: {DatabaseName}...");
         }
     }
 }

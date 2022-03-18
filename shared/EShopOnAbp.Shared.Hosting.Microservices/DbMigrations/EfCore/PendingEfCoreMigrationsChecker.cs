@@ -46,7 +46,7 @@ public abstract class PendingEfCoreMigrationsChecker<TDbContext> : PendingMigrat
 
     protected virtual async Task LockAndApplyDatabaseMigrationsAsync()
     {
-        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_EfCore"))
+        await using (var handle = await DistributedLockProvider.TryAcquireAsync($"Migration_EfCore_{DatabaseName}"))
         {
             if (handle == null)
             {
@@ -78,5 +78,7 @@ public abstract class PendingEfCoreMigrationsChecker<TDbContext> : PendingMigrat
                     .SeedAsync();
             }
         }
+
+        Log.Information($"Lock is released for: {DatabaseName}...");
     }
 }
