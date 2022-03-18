@@ -10,6 +10,7 @@ services:
     - Kestrel__Certificates__Default__Password=8b6039b6-c67a-448b-977b-0ce6d3fcfd49
 
 - name: identity-service
+  replicas: 5
   project: services/identity/src/EShopOnAbp.IdentityService.HttpApi.Host/EShopOnAbp.IdentityService.HttpApi.Host.csproj
   bindings:
     - protocol: https
@@ -19,6 +20,7 @@ services:
     - Kestrel__Certificates__Default__Password=8b6039b6-c67a-448b-977b-0ce6d3fcfd49
 
 - name: administration-service
+  replicas: 5
   project: services/administration/src/EShopOnAbp.AdministrationService.HttpApi.Host/EShopOnAbp.AdministrationService.HttpApi.Host.csproj
   bindings:
     - protocol: https
@@ -46,6 +48,7 @@ services:
     - Kestrel__Certificates__Default__Password=8b6039b6-c67a-448b-977b-0ce6d3fcfd49
 
 - name: ordering-service
+  replicas: 5
   project: services/ordering/src/EShopOnAbp.OrderingService.HttpApi.Host/EShopOnAbp.OrderingService.HttpApi.Host.csproj
   bindings:
     - protocol: https
@@ -55,6 +58,7 @@ services:
     - Kestrel__Certificates__Default__Password=8b6039b6-c67a-448b-977b-0ce6d3fcfd49
 
 - name: payment-service
+  replicas: 5
   project: services/payment/src/EShopOnAbp.PaymentService.HttpApi.Host/EShopOnAbp.PaymentService.HttpApi.Host.csproj
   bindings:
     - protocol: https

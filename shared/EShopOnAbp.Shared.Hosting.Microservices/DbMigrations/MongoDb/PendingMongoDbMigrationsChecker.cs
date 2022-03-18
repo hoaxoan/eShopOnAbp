@@ -59,52 +59,46 @@ public class PendingMongoDbMigrationsChecker<TDbContext> : PendingMigrationsChec
     /// <summary>
     /// Apply scheme update for MongoDB Database.
     /// </summary>
-    protected virtual async Task<bool> MigrateDatabaseSchemaAsync()
+    protected virtual async Task MigrateDatabaseSchemaAsync()
     {
-        var result = false;
-        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_" + DatabaseName))
+        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_Mongo"))
         {
+            if (handle == null)
+            {
+                return;
+            }
+
             Log.Information($"Lock is acquired for db migration and seeding on database named: {DatabaseName}...");
 
             using (var uow = UnitOfWorkManager.Begin(requiresNew: true, isTransactional: false))
             {
-                async Task<bool> MigrateDatabaseSchemaWithDbContextAsync()
+                var dbContexts = ServiceProvider.GetServices<IAbpMongoDbContext>();
+                var connectionStringResolver = ServiceProvider.GetRequiredService<IConnectionStringResolver>();
+
+                foreach (var dbContext in dbContexts)
                 {
-                    var dbContexts = ServiceProvider.GetServices<IAbpMongoDbContext>();
-                    var connectionStringResolver = ServiceProvider.GetRequiredService<IConnectionStringResolver>();
-
-                    foreach (var dbContext in dbContexts)
+                    var connectionString =
+                        await connectionStringResolver.ResolveAsync(
+                            ConnectionStringNameAttribute.GetConnStringName(dbContext.GetType()));
+                    if (connectionString.IsNullOrWhiteSpace())
                     {
-                        var connectionString =
-                            await connectionStringResolver.ResolveAsync(
-                                ConnectionStringNameAttribute.GetConnStringName(dbContext.GetType()));
-                        if (connectionString.IsNullOrWhiteSpace())
-                        {
-                            continue;
-                        }
-
-                        var mongoUrl = new MongoUrl(connectionString);
-                        var databaseName = mongoUrl.DatabaseName;
-                        var client = new MongoClient(mongoUrl);
-
-                        if (databaseName.IsNullOrWhiteSpace())
-                        {
-                            databaseName = ConnectionStringNameAttribute.GetConnStringName(dbContext.GetType());
-                        }
-
-                        (dbContext as AbpMongoDbContext)?.InitializeCollections(client.GetDatabase(databaseName));
+                        continue;
                     }
 
-                    return true;
-                }
+                    var mongoUrl = new MongoUrl(connectionString);
+                    var databaseName = mongoUrl.DatabaseName;
+                    var client = new MongoClient(mongoUrl);
 
-                //Migrating the host database
-                result = await MigrateDatabaseSchemaWithDbContextAsync();
+                    if (databaseName.IsNullOrWhiteSpace())
+                    {
+                        databaseName = ConnectionStringNameAttribute.GetConnStringName(dbContext.GetType());
+                    }
+
+                    (dbContext as AbpMongoDbContext)?.InitializeCollections(client.GetDatabase(databaseName));
+                }
 
                 await uow.CompleteAsync();
             }
-
-            return result;
         }
     }
 }

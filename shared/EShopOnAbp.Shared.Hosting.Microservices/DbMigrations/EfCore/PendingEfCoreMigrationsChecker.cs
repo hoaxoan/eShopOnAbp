@@ -41,13 +41,18 @@ public abstract class PendingEfCoreMigrationsChecker<TDbContext> : PendingMigrat
 
     public virtual async Task CheckAndApplyDatabaseMigrationsAsync()
     {
-        await TryAsync(LockAndApplyDatabaseMigrationsAsync); 
+        await TryAsync(LockAndApplyDatabaseMigrationsAsync);
     }
 
     protected virtual async Task LockAndApplyDatabaseMigrationsAsync()
     {
-        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_" + DatabaseName))
+        await using (var handle = await DistributedLockProvider.TryAcquireAsync("Migration_EfCore"))
         {
+            if (handle == null)
+            {
+                return;
+            }
+
             Log.Information($"Lock is acquired for db migration and seeding on database named: {DatabaseName}...");
 
             using (CurrentTenant.Change(null))

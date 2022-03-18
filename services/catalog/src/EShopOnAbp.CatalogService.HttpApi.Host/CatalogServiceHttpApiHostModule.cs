@@ -12,9 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.Data;
 using Volo.Abp.Modularity;
 using Volo.Abp.Uow;
 
@@ -123,6 +125,12 @@ public class CatalogServiceHttpApiHostModule : AbpModule
 
     public override async Task OnPostApplicationInitializationAsync(ApplicationInitializationContext context)
     {
+        var contributors = context.ServiceProvider.GetServices(typeof(IDataSeedContributor));
+
+        foreach (var contributor in contributors)
+        {
+            Log.Information($" === type:${contributor.GetType().FullName}  === ");
+        }
         await context.ServiceProvider
             .GetRequiredService<CatalogServiceDatabaseMigrationChecker>()
             .CheckAndApplyDatabaseMigrationsAsync();
