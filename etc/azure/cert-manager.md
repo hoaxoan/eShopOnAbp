@@ -1,4 +1,4 @@
-* Install the `cert-manager` on petclinic cluster. See [Cert-Manager info](https://cert-manager.io/docs/).
+* Install the `cert-manager` on  cluster. See [Cert-Manager info](https://cert-manager.io/docs/).
 
   * Create the namespace for ingress-basic
 
