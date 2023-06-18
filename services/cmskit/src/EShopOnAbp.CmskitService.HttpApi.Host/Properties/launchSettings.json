@@ -17,12 +17,12 @@
     },
     "EShopOnAbp.CmskitService.HttpApi.Host": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44358",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": "true"
     }
   }
 }

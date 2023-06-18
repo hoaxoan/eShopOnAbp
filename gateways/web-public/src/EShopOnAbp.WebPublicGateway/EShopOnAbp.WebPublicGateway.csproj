@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'EShopOnAbp.PublicWebGateway' " />
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\shared\EShopOnAbp.Shared.Hosting.Gateways\EShopOnAbp.Shared.Hosting.Gateways.csproj" />
   </ItemGroup>

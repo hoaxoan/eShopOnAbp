@@ -9,6 +9,7 @@
     <UserSecretsId>EShopOnAbp.OrderingService-c2d31439-b723-48e2-b061-5ebd7aeb6010</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'EShopOnAbp.OrderingService.DemoApp' " />
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" Version="7.0.0" />
     <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="7.0.0" />

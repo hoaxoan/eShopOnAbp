@@ -6,6 +6,7 @@
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'EShopOnAbp.AdministrationService.HttpApi.Host' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
